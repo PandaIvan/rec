@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AROY AROY - Тайско-русская кухня</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="{% static 'menu/css/styles.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $('.slider').slick({
+                dots: true,
+                infinite: true,
+                speed: 500,
+                slidesToShow: 1,
+                adaptiveHeight: true
+            });
+        });
+    </script>
+    <style>
+        .slider img {
+            max-width: 100%;
+            max-height: 400px; /* Устанавливаем максимальную высоту для слайдера */
+            object-fit: cover;  /* Изображение будет обрезано, чтобы соответствовать контейнеру */
+            width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body class="bg-white font-sans">
+    {% include 'menu/common_header.html' %}
+
+    <!-- Main Content -->
+    <main class="pt-24 p-10">
+        <!-- Welcome Section -->
+        <div class="container mx-auto flex flex-col items-center">
+            <div class="w-full max-w-3xl mb-10 overflow-hidden rounded-lg shadow-lg">
+                <img src="https://primebeef.ru/images/cms/thumbs/a5b0aeaa3fa7d6e58d75710c18673bd7ec6d5f6d/3-501_500_306_5_100.jpg" alt="Картинка с хавкой" class="w-full">
+            </div>
+            <div class="text-center max-w-2xl">
+                <h2 class="text-3xl font-bold mb-5 text-red-700">Добро пожаловать в AROY AROY!</h2>
+                <p class="text-xl text-gray-700 leading-relaxed">Испытайте уникальные вкусы тайско-русской кухни, где мы совмещаем лучшие традиции обеих культур, чтобы создать восхитительные блюда.</p>
+            </div>
+        </div>
+
+        <!-- Promotions Slider -->
+        <div class="container mx-auto mt-20">
+            <h2 class="text-3xl font-bold mb-5 text-center text-red-700">Наши Акции</h2>
+            <div class="slider">
+                {% for promo in promotions %}
+                <div class="p-5">
+                    <img src="{{ promo.image.url }}" alt="{{ promo.title }}" class="w-full rounded-lg shadow-md object-cover">
+                    <h3 class="text-2xl font-semibold mt-3 text-red-700">{{ promo.title }}</h3>
+                    <p class="text-lg text-gray-700 mt-2">{{ promo.description }}</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </main>
+
+    {% include 'menu/common_footer.html' %}
+</body>
+</html>
