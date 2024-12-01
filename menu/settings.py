@@ -134,3 +134,30 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "handlers": {
+        "console": {
+            "level": "DEBUG",  # Изменено на DEBUG для более детального логирования
+            "class": "logging.StreamHandler",
+        },
+    },
+    "loggers": {
+        "django": {
+            "handlers": ["console"],
+            "level": "DEBUG",  # Изменено на DEBUG, чтобы видеть больше информации
+            "propagate": True,  # Устанавливаем True, чтобы логи от Django попадали в корневой логгер
+        },
+        "menu": {
+            "handlers": ["console"],
+            "level": "DEBUG",  # Изменено на DEBUG для вывода всех логов вашего приложения
+            "propagate": False,
+        },
+    },
+    "root": {
+        "handlers": ["console"],
+        "level": "DEBUG",
+    },
+}

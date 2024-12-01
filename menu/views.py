@@ -1,3 +1,5 @@
+import logging
+
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
@@ -59,10 +61,7 @@ def add_to_cart(request, product_id):
 def remove_from_cart(request, product_id):
     cart = get_or_create_cart(request)
     cart_item = get_object_or_404(CartItem, cart=cart, product_id=product_id)
-    if cart_item.quantity > 1:
-        cart_item.quantity -= 1
-        cart_item.save()
-    else:
+    if cart_item.quantity >= 1:
         cart_item.delete()
     return redirect("cart")
 
@@ -108,9 +107,55 @@ def category_detail(request, pk):
     )
 
 
+logger = logging.getLogger(__name__)
+
+
 def slider(request):
+    # Получаем все активные промо-акции
     promotions = Promotion.objects.filter(active=True)
-    return render(request, "index.html", {"promotions": promotions})
+
+    # Логируем количество активных промо-акций
+    logger.info(f"Количество активных промо-акций: {promotions.count()}")
+
+    # Рендерим главную страницу с переданными промо-акциями
+    return render(request, "menu/index.html", {"promotions": promotions})
+
+
+# def slider(request):
+#     # Хардкодим 5 примеров промо-акций
+#     promotions = [
+#         {
+#             "title": "Скидка 10% на все блюда",
+#             "description": "Получите скидку 10% на все наши блюда до конца недели!",
+#             "image_url": "https://example.com/images/promo1.jpg",
+#         },
+#         {
+#             "title": "Бесплатный десерт",
+#             "description": "Закажите обед и получите бесплатный десерт!",
+#             "image_url": "https://example.com/images/promo2.jpg",
+#         },
+#         {
+#             "title": "2 по цене 1 на напитки",
+#             "description": "Все напитки по акции '2 по цене 1' до конца дня!",
+#             "image_url": "https://example.com/images/promo3.jpg",
+#         },
+#         {
+#             "title": "Скидка на бизнес-ланч",
+#             "description": "Скидка 15% на бизнес-ланч с 12 до 15 часов.",
+#             "image_url": "https://example.com/images/promo4.jpg",
+#         },
+#         {
+#             "title": "Подарочный сертификат",
+#             "description": "Покупка подарочного сертификата на 500 рублей за 450 рублей.",
+#             "image_url": "https://example.com/images/promo5.jpg",
+#         },
+#     ]
+#
+#     # Логируем количество активных промо-акций
+#     logger.info(f"Количество активных промо-акций: {len(promotions)}")
+#
+#     # Рендерим главную страницу с переданными промо-акциями
+#     return render(request, "menu/index.html", {"promotions": promotions})
 
 
 def test_session(request):

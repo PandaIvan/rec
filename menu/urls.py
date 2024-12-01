@@ -8,7 +8,7 @@ from menu.views import test_session, get_session, clear_session
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("", views.index, name="index"),  # Главная страница
+    path("", views.slider, name="index"),  # Главная страница
     path("menu/", views.menu, name="menu"),  # Путь для страницы меню
     path("cart/", views.cart, name="cart"),  # Страница корзины
     path(
