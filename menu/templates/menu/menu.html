@@ -10,88 +10,29 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 <body class="bg-white font-sans">
-    <!-- Header -->
-    {% include 'menu/common_header.html' %}
+<!-- Header -->
+{% include 'menu/common_header.html' %}
 
-    <div class="menu-categories container mx-auto p-10 pt-24">
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-            {% for category in categories %}
-                {% if category.products.exists %}  <!-- Проверяем, есть ли продукты в категории -->
-                <a href="{% url 'category_detail' category.id %}" class="category bg-white shadow-md rounded-lg p-5 mb-6 text-center" style="aspect-ratio: 1/1;">
-                    <img src="{% if category.image %}{{ category.image.url }}{% else %}{% static 'menu/images/default.jpg' %}{% endif %}" alt="{{ category.name }}" class="w-full h-full object-cover rounded-md mb-4">
+<div class="menu-categories container mx-auto p-10 pt-24">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+        {% for category in categories %}
+            {% if category.products.exists %}  <!-- Проверяем, есть ли продукты в категории -->
+                <a href="{% url 'category_detail' category.id %}"
+                   class="category bg-white shadow-md rounded-lg p-5 mb-6 text-center" style="aspect-ratio: 1/1;">
+                    <img src="
+                            {% if category.image %}{{ category.image.url }}{% else %}{% static 'menu/images/default.jpg' %}{% endif %}"
+                         alt="{{ category.name }}" class="w-full h-full object-cover rounded-md mb-4">
                     <h2 class="text-2xl font-bold mb-4 text-red-700">{{ category.name }}</h2>
                 </a>
-                {% endif %}
-            {% endfor %}
-        </div>
+            {% endif %}
+        {% endfor %}
     </div>
+</div>
 
-    <div class="container mx-auto p-10">
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-            {% for product in products %}
-            <div class="bg-white shadow-md rounded-lg p-5" style="aspect-ratio: 1/1;">
-                <img src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'menu/images/default.jpg' %}{% endif %}" alt="{{ product.name }}" class="w-full h-full object-cover rounded-md mb-4">
-                <h3 class="text-xl font-semibold text-red-700">{{ product.name }}</h3>
-                <p class="text-gray-700">{{ product.description }}</p>
-                <p class="text-red-700 font-bold mt-2">{{ product.price }} руб.</p>
-                <div class="flex space-x-2 mt-4">
-                    <a href="{% url 'add_to_cart' product_id=product.id %}" class="bg-green-500 text-white px-4 py-2 rounded">Добавить в корзину</a>
-                </div>
-            </div>
-            {% endfor %}
-        </div>
-    </div>
 
-    <!-- Footer -->
-    {% include 'menu/common_footer.html' %}
+<!-- Footer -->
+{% include 'menu/common_footer.html' %}
 
-    <script>
-        document.querySelectorAll('.category').forEach(function(element) {
-            element.addEventListener('click', function(event) {
-                event.preventDefault();
-                window.location.href = this.href;
-            });
-        });
-
-        // JavaScript to handle quantity change buttons and add to cart using AJAX
-        document.querySelectorAll('.product-card').forEach(function(productCard) {
-            const plusButton = productCard.querySelector('.plus-button');
-            const minusButton = productCard.querySelector('.minus-button');
-            const quantityInput = productCard.querySelector('.quantity-input');
-            const addToCartButton = productCard.querySelector('.add-to-cart');
-
-            plusButton.addEventListener('click', function() {
-                quantityInput.value = parseInt(quantityInput.value) + 1;
-            });
-
-            minusButton.addEventListener('click', function() {
-                if (parseInt(quantityInput.value) > 1) {
-                    quantityInput.value = parseInt(quantityInput.value) - 1;
-                }
-            });
-
-            addToCartButton.addEventListener('click', function(event) {
-                event.preventDefault();
-                const quantity = parseInt(quantityInput.value);
-                const addToCartUrl = addToCartButton.getAttribute('data-url');
-
-                // Используем AJAX для добавления товара в корзину
-                $.ajax({
-                    url: addToCartUrl,
-                    type: 'GET',
-                    data: {
-                        quantity: quantity
-                    },
-                    success: function(response) {
-                        // Товар добавлен в корзину без перехода или всплывающих окон
-                        console.log('Товар успешно добавлен в корзину');
-                    },
-                    error: function() {
-                        console.error('Произошла ошибка при добавлении товара в корзину');
-                    }
-                });
-            });
-        });
-    </script>
 </body>
 </html>
+

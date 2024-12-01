@@ -1,19 +1,9 @@
 from django.contrib import admin
 from .models import Category, Product, Cart, CartItem, Promotion
 
-# Создаем кастомный административный сайт
-class CustomAdminSite(admin.AdminSite):
-    site_header = "Администрация AROY AROY"
-    site_title = "AROY AROY Admin"
-    index_title = "Добро пожаловать в панель администрирования AROY AROY"
 
-custom_admin_site = CustomAdminSite(name='custom_admin')
-
-# Регистрируем модели для кастомного админсайта
-custom_admin_site.register(Category)
-custom_admin_site.register(Product)
-custom_admin_site.register(Cart)
-custom_admin_site.register(CartItem)
+admin.sites.AdminSite.site_header = "Админ-панель SHTAB"
+admin.sites.AdminSite.index_title = "Приложения"
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):

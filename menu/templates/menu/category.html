@@ -92,30 +92,85 @@
     </style>
 </head>
 <body>
-    {% include 'menu/common_header.html' %}
+{% include 'menu/common_header.html' %}
 
-    <div class="container mx-auto px-4 py-6">
-        <h2 class="category-title">{{ category.name }}</h2>
+<div class="container mx-auto px-4 py-6">
+    <h2 class="category-title">{{ category.name }}</h2>
 
-        <div class="product-grid">
-            {% for product in products %}
+    <div class="product-grid">
+        {% for product in products %}
             <div class="product-card">
-                <img src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'menu/images/default.jpg' %}{% endif %}" alt="{{ product.name }}">
+                <img src="
+
+
+
+
+
+
+
+
+
+                        {% if product.image %}{{ product.image.url }}{% else %}{% static 'menu/images/default.jpg' %}{% endif %}"
+                     alt="{{ product.name }}">
                 <div class="product-info">
                     <h3 class="product-name">{{ product.name }}</h3>
+                    <div class="flex items-center justify-center mt-4">
+                        <button id="{{ product.id }}" type="button"
+                                class="increment bg-green-500 text-white px-3 py-1 rounded plus-button">+
+                        </button>
+                        <input id="{{ product.id }}" type="number" value="0"
+                               class="quantity-input w-16 text-center mx-2 border border-gray-300 rounded" min="1"
+                               max="100" placeholder="0" step="1">
+                        <button id="{{ product.id }}" type="button"
+                                class="decrement bg-red-500 text-white px-3 py-1 rounded minus-button">-
+                        </button>
+                    </div>
                     <p class="product-description">{{ product.description }}</p>
                     <p class="product-price">{{ product.price }} руб.</p>
                     <a href="{% url 'add_to_cart' product_id=product.id %}" class="add-to-cart">Добавить в корзину</a>
                 </div>
             </div>
-            {% endfor %}
-        </div>
-
-        <div class="text-center mt-10">
-            <a href="{% url 'menu' %}" class="bg-red-700 text-white px-6 py-3 rounded-lg">Вернуться в меню</a>
-        </div>
+        {% endfor %}
     </div>
 
-    {% include 'menu/common_footer.html' %}
+    <div class="text-center mt-10">
+        <a href="{% url 'menu' %}" class="bg-red-700 text-white px-6 py-3 rounded-lg">Вернуться в меню</a>
+    </div>
+</div>
+
+{% include 'menu/common_footer.html' %}
 </body>
+<script>document.addEventListener("DOMContentLoaded", function () {
+    const plusButtons = document.querySelectorAll(".plus-button");
+    const minusButtons = document.querySelectorAll(".minus-button");
+    const quantityInputs = document.querySelectorAll(".quantity-input");
+
+    const cardContainer = document.querySelector('.product-grid');
+
+    // Вешаем один обработчик на контейнер
+    cardContainer.addEventListener('click', (event) => {
+        const target = event.target;
+        console.log(target)
+        // Определяем карточку, по которой произошло событие
+        const card = target.closest('.product-card');
+        if (!card) return;
+        console.log(card)
+        // Находим input внутри карточки
+        const input = card.querySelector('.quantity-input');
+        let currentValue = parseInt(input.value, 10);
+
+        // Проверяем, какая кнопка нажата
+        if (target.classList.contains('increment')) {
+            input.value = currentValue + 1; // Увеличиваем значение
+        } else if (target.classList.contains('decrement')) {
+            if (currentValue > 1) {
+                input.value = currentValue - 1; // Уменьшаем значение
+            }
+        }
+    });
+
+});</script>
 </html>
+
+
+
