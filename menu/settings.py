@@ -121,7 +121,7 @@ STATICFILES_DIRS = [
 
 # Статические файлы
 STATIC_URL = "/static/"
-STATICFILES_DIRS = [os.path.join(BASE_DIR, "menu", "images")]
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
 # Медиа файлы
 MEDIA_URL = "/products/"

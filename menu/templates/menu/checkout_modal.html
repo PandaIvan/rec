@@ -4,7 +4,10 @@
         <h3 class="text-2xl font-bold text-red-700 mb-5">Оформление заказа</h3>
         <ul class="mb-5">
             {% for item in cart_items %}
-            <li class="text-gray-700">{{ item.product.name }} ({{ item.quantity }}) - {{ item.product.price|floatformat:2 }} * {{ item.quantity }} = {{ item.product.price|floatformat:2|floatformat }} руб.</li>
+                <li class="text-gray-700">{{ item.product.name }} ({{ item.quantity }})
+                    - {{ item.product.price|floatformat:2 }} * {{ item.quantity }}
+                    = {{ item.product.price|floatformat:2|floatformat }} руб.
+                </li>
             {% endfor %}
         </ul>
         <p class="text-xl font-bold text-red-700 mb-5">Общая сумма: {{ total_price|floatformat:2 }} руб.</p>
@@ -19,7 +22,9 @@
                 <input type="email" id="email" name="email" class="w-full p-2 border border-gray-300 rounded" required>
             </div>
             <div class="flex justify-end space-x-4">
-                <button type="button" id="close-checkout-modal" class="bg-gray-500 text-white px-6 py-2 rounded">Отмена</button>
+                <button type="button" id="close-checkout-modal" class="bg-gray-500 text-white px-6 py-2 rounded">
+                    Отмена
+                </button>
                 <button type="submit" class="bg-green-700 text-white px-6 py-2 rounded">Подтвердить заказ</button>
             </div>
         </form>
@@ -27,11 +32,12 @@
 </div>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
         // Закрытие модального окна оформления заказа при нажатии на кнопку "Отмена"
         const closeModalButton = document.getElementById('close-checkout-modal');
         if (closeModalButton) {
-            closeModalButton.addEventListener('click', function() {
+            closeModalButton.addEventListener('click', function () {
+                console.log('close')
                 document.getElementById('checkout-modal').classList.add('hidden');
             });
         }
@@ -39,7 +45,7 @@
         // Открытие модального окна оформления заказа при нажатии на кнопку "Оформить заказ"
         const openModalButton = document.getElementById('open-checkout-modal');
         if (openModalButton) {
-            openModalButton.addEventListener('click', function(event) {
+            openModalButton.addEventListener('click', function (event) {
                 event.preventDefault();
                 document.getElementById('checkout-modal').classList.remove('hidden');
             });

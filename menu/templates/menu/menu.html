@@ -20,6 +20,8 @@
                 <a href="{% url 'category_detail' category.id %}"
                    class="category bg-white shadow-md rounded-lg p-5 mb-6 text-center" style="aspect-ratio: 1/1;">
                     <img src="
+
+
                             {% if category.image %}{{ category.image.url }}{% else %}{% static 'menu/images/default.jpg' %}{% endif %}"
                          alt="{{ category.name }}" class="w-full h-full object-cover rounded-md mb-4">
                     <h2 class="text-2xl font-bold mb-4 text-red-700">{{ category.name }}</h2>
